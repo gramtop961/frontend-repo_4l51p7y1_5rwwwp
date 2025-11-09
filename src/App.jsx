@@ -1,28 +1,28 @@
-import { useState } from 'react'
+import { useCallback } from 'react';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Experience from './components/Experience';
+import Contact from './components/Contact';
+import EasterEggs from './components/EasterEggs';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const onSecretTap = useCallback(() => {
+    // Dispatch a global event listened by EasterEggs to keep components decoupled
+    window.dispatchEvent(new CustomEvent('secret-tap'));
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 selection:bg-indigo-500/20 selection:text-indigo-700 dark:selection:bg-indigo-500/30 dark:selection:text-white">
+      <Navbar onSecretTap={onSecretTap} />
+      <main>
+        <Hero />
+        <Experience />
+        <Contact />
+      </main>
+      <EasterEggs />
+      <footer className="py-10 text-center text-xs text-zinc-500">
+        © {new Date().getFullYear()} Ava — Crafted with care.
+      </footer>
     </div>
-  )
+  );
 }
-
-export default App
